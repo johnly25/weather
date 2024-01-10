@@ -14,8 +14,7 @@ const domHandler = (function () {
 
     function setup() {
         let promise = getApi("seattle");
-        let data = getData(promise);
-        loadData(data);
+        getData(promise);
     }
     async function getData(forecast) {
         let data = await forecast;
@@ -32,7 +31,6 @@ const domHandler = (function () {
 
     function loadCity(data) {
         let city = document.querySelector('.city');
-        console.log(city);
         city.textContent = "";
         let name = document.createElement('div');
         let date = document.createElement('div');
@@ -44,11 +42,9 @@ const domHandler = (function () {
         date.classList.add('date');
         imgContainer.classList.add('status-image');
         status.classList.add('status');
-
-        console.log(data);
         name.textContent = data.location.name + ", " + data.location.region;
         date.textContent = data.location.localtime;
-        img.src = data.current.condition.icon;
+        img.src = "https:"+data.current.condition.icon;
         status.textContent = data.current.condition.text;
 
         city.append(name, date, img, status);
@@ -98,19 +94,12 @@ const domHandler = (function () {
         loadDaily(data);
         loadDetails(data);
         loadPrecipitation(data);
-
-        //add class to buttons
-        //add another div to wrap the content 
-        //add the events on click 
-        //make active classes 
-        //
     }
 
     function loadHourly(data) {
         let container = document.querySelector(".tabs-container");
         let hourly = document.createElement("div");
         hourly.classList.add("hourly", 'tab');
-        // hourly.classList.add("content");
 
         let time = parseInt(data.location.localtime.split(' ')[1].split(':')[0].trim());
         let i = 0;
@@ -121,7 +110,7 @@ const domHandler = (function () {
             let img = document.createElement('img');
             let degree = document.createElement('div');
             timewrapper.textContent = time;
-            img.src = data.forecast.forecastday[day].hour[time].condition.icon;
+            img.src = "https:"+data.forecast.forecastday[day].hour[time].condition.icon;
             degree.textContent = data.forecast.forecastday[day].hour[time].temp_f + "°";
             div.append(timewrapper, img, degree);
             hourly.append(div);
@@ -149,7 +138,7 @@ const domHandler = (function () {
             let degrees = document.createElement("div");
 
             day.textContent = weather.date;
-            img.src = weather.day.condition.icon;
+            img.src = "https:"+weather.day.condition.icon;
             degrees.textContent = weather.day.maxtemp_f + "°/" + weather.day.mintemp_f + "°";
 
 
@@ -195,7 +184,6 @@ const domHandler = (function () {
 
     function setupTabs() {
         let buttons = document.querySelectorAll('.buttons button');
-        console.log(buttons)
         buttons.forEach((button) => {
             button.addEventListener('click', (event) => {
                 showTab(event.target.textContent.toLowerCase());
@@ -209,7 +197,6 @@ const domHandler = (function () {
         let tab = document.querySelector("." + name);
         let button = document.getElementById(name);
         button.classList.add('active');
-        console.log(button);
         tab.classList.remove('content');
 
 
@@ -217,7 +204,6 @@ const domHandler = (function () {
 
     function hideTabs() {
         let tabs = document.querySelectorAll('.tab');
-        console.log(tabs);
         tabs.forEach((tab) => {
             tab.classList.add('content');
         });
@@ -230,7 +216,7 @@ const domHandler = (function () {
         })
     }
     async function getApi(city) {
-        const query = 'http://api.weatherapi.com/v1/forecast.json?key=175167add14f41e0abe221313232612&aqi=no&days=3&q=' + city;
+        const query = 'https://api.weatherapi.com/v1/forecast.json?key=175167add14f41e0abe221313232612&aqi=no&days=3&q=' + city;
         const weather = await fetch(query, { mode: 'cors' });
         const data = await weather.json();
         return data;
