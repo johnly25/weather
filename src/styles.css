@@ -1,0 +1,141 @@
+@font-face {
+    font-family: 'Overpass';
+    src: url('./fonts/Overpass/Overpass-VariableFont_wght.ttf') format('truetype');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'OverpassItalic';
+    src: url('./fonts/Overpass/Overpass-Italic-VariableFont_wght.ttf') format('truetype');
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    font-family: 'Overpass';
+    color: white;
+}
+
+.nav {
+    display: grid;
+    justify-items: end;
+    padding: 2rem 4rem;
+}
+
+.container {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+    background: url('./assets/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.container-weather {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: 100%;
+    padding: 2rem 4rem;
+}
+
+input[type=text] {
+    width: 250px;
+}
+
+.hourly,
+.daily {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.tabs {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding-bottom: 5rem;
+}
+
+.tophalf {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+* {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.content {
+    display: none;
+}
+
+.name {
+    font-size: 2rem;
+}
+
+.date {
+    font-size: 1.5rem;
+}
+
+.city img {
+    height: 5rem;
+}
+
+.status {
+    font-size: 1.8rem;
+}
+
+.degrees {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content min-content;
+    justify-items: center;
+    align-items: center;
+    gap: 0;
+    font-size: 4rem;
+    font-variation-settings: 'wght' 200;
+}
+
+.degrees div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.hourly div,
+.daily div {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    font-size: 1.5rem;
+    gap: 1rem;
+}
+
+.details div,
+.precipitation div {
+    font-size: 1.5rem;
+
+}
+
+.hourly div img {
+    height: 4rem;
+}
+
+.tab {
+    padding: 2rem 0 0 0;
+}
+
+.active {
+    border-bottom: 2px solid white !important;; 
+}
+
+.buttons button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+}
+
