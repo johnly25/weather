@@ -1,6 +1,5 @@
 const domHandler = (function () {
-    let promise = getApi("seattle");
-    loadData(promise);
+
 
     function searchEvent() {
         let search = document.getElementById("search");
@@ -8,16 +7,22 @@ const domHandler = (function () {
             if (event.key === "Enter") {
                 event.preventDefault();
                 let promise = getApi(event.target.value);
-                loadData(promise);
+                getData(promise);
             }
         });
     }
 
-    async function loadData(forecast) {
+    function setup() {
+        let promise = getApi("seattle");
+        let data = getData(promise);
+        loadData(data);
+    }
+    async function getData(forecast) {
         let data = await forecast;
-        data = JSON.stringify(data);
-        data = JSON.parse(data);
+        loadData(data);
+    }
 
+    function loadData(data) {
         loadCity(data);
         loadDegrees(data);
         loadTabs(data);
@@ -25,9 +30,9 @@ const domHandler = (function () {
         setupTabs();
     }
 
-
     function loadCity(data) {
         let city = document.querySelector('.city');
+        console.log(city);
         city.textContent = "";
         let name = document.createElement('div');
         let date = document.createElement('div');
@@ -40,6 +45,7 @@ const domHandler = (function () {
         imgContainer.classList.add('status-image');
         status.classList.add('status');
 
+        console.log(data);
         name.textContent = data.location.name + ", " + data.location.region;
         date.textContent = data.location.localtime;
         img.src = data.current.condition.icon;
@@ -116,7 +122,7 @@ const domHandler = (function () {
             let degree = document.createElement('div');
             timewrapper.textContent = time;
             img.src = data.forecast.forecastday[day].hour[time].condition.icon;
-            degree.textContent = data.forecast.forecastday[day].hour[time].temp_f+"°";
+            degree.textContent = data.forecast.forecastday[day].hour[time].temp_f + "°";
             div.append(timewrapper, img, degree);
             hourly.append(div);
             time++;
@@ -144,7 +150,7 @@ const domHandler = (function () {
 
             day.textContent = weather.date;
             img.src = weather.day.condition.icon;
-            degrees.textContent = weather.day.maxtemp_f + "°/" + weather.day.mintemp_f+"°";
+            degrees.textContent = weather.day.maxtemp_f + "°/" + weather.day.mintemp_f + "°";
 
 
             div.append(day, img, degrees);
@@ -230,7 +236,7 @@ const domHandler = (function () {
         return data;
     }
 
-    return { searchEvent };
+    return { searchEvent, setup };
 })();
 
 export default domHandler;

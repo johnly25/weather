@@ -4,3 +4,4 @@ import domHandler from "./domHandler";
 
 setup();
 domHandler.searchEvent();
+domHandler.setup();
